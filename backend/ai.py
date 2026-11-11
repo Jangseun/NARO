@@ -18,7 +18,9 @@ def is_demo_mode():
 
 def ask_ai_for_json(system_prompt, user_prompt):
     """OpenAI에 질문을 보내고, JSON 형식의 답을 파이썬 딕셔너리로 돌려받는다"""
-    client = OpenAI()  # 환경변수 OPENAI_API_KEY를 자동으로 읽는다
+    # 환경변수 OPENAI_API_KEY를 읽는다.
+    # OPENAI_BASE_URL을 적으면 OpenAI 대신 같은 형식을 지원하는 다른 AI(예: 무료 Gemini)에 연결된다.
+    client = OpenAI(base_url=os.getenv("OPENAI_BASE_URL") or None)
     response = client.chat.completions.create(
         model=os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
         messages=[
@@ -28,7 +30,10 @@ def ask_ai_for_json(system_prompt, user_prompt):
         response_format={"type": "json_object"},  # 반드시 JSON으로 답하도록 요청
         temperature=0.7,
     )
-    text = response.choices[0].message.content
+    text = response.choices[0].message.content.strip()
+    # 일부 AI는 JSON을 ```json ... ``` 으로 감싸서 보내므로 감싼 부분을 떼어 낸다
+    if text.startswith("```"):
+        text = text.strip("`").removeprefix("json").strip()
     return json.loads(text)
 
 
