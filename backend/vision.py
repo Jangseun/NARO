@@ -358,23 +358,25 @@ class CameraManager:
         self.thread.start()
 
     def stop(self):
-        """카메라를 끈다"""
+        """카메라를 끈다.
+        카메라를 직접 닫지 않고 running을 False로 바꿔 스레드에게 멈추라고 알린다.
+        (윈도우에서는 영상을 읽는 도중 다른 스레드가 카메라를 닫으면 프로그램이 멈출 수 있어서,
+         카메라는 _loop 스레드가 스스로 닫는다)"""
         self.running = False
         if self.thread is not None:
-            self.thread.join(timeout=3)
+            self.thread.join(timeout=3)  # 최대 3초만 기다린다 (멈춰 있어도 서버 종료를 막지 않도록)
             self.thread = None
-        if self.camera is not None:
-            self.camera.close()
-            self.camera = None
+        self.camera = None
         self.latest_jpeg = None
         self.latest_result = None
 
     def _loop(self):
         """카메라가 켜져 있는 동안 반복: 프레임 읽기 → 분석 → 그리기 → 저장"""
+        camera = self.camera
         last_time = time.time()
         while self.running:
             try:
-                frame = self.camera.read()
+                frame = camera.read()
                 if frame is None:
                     time.sleep(0.05)
                     continue
@@ -399,6 +401,9 @@ class CameraManager:
                 # 초당 처리 프레임 수(FPS)를 부드럽게 계산
                 self.fps = 0.9 * self.fps + 0.1 * (1 / max(now - last_time, 0.001))
             last_time = now
+
+        # 반복이 끝나면(카메라 끄기) 이 스레드가 직접 카메라를 닫는다
+        camera.close()
 
     def start_collecting(self):
         """면접 시작: 분석 결과 모으기를 시작한다"""

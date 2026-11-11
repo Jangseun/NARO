@@ -17,24 +17,40 @@ def is_demo_mode():
 
 
 def ask_ai_for_json(system_prompt, user_prompt):
-    """OpenAI에 질문을 보내고, JSON 형식의 답을 파이썬 딕셔너리로 돌려받는다"""
+    """AI에 질문을 보내고, JSON 형식의 답을 파이썬 딕셔너리로 돌려받는다"""
     # 환경변수 OPENAI_API_KEY를 읽는다.
     # OPENAI_BASE_URL을 적으면 OpenAI 대신 같은 형식을 지원하는 다른 AI(예: 무료 Gemini)에 연결된다.
-    client = OpenAI(base_url=os.getenv("OPENAI_BASE_URL") or None)
-    response = client.chat.completions.create(
-        model=os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
-        messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt},
-        ],
-        response_format={"type": "json_object"},  # 반드시 JSON으로 답하도록 요청
-        temperature=0.7,
-    )
-    text = response.choices[0].message.content.strip()
-    # 일부 AI는 JSON을 ```json ... ``` 으로 감싸서 보내므로 감싼 부분을 떼어 낸다
-    if text.startswith("```"):
-        text = text.strip("`").removeprefix("json").strip()
-    return json.loads(text)
+    # timeout=30: 30초 안에 답이 없으면 포기하고 다음 모델로 넘어간다
+    client = OpenAI(base_url=os.getenv("OPENAI_BASE_URL") or None, timeout=30, max_retries=0)
+
+    # OPENAI_MODEL에 모델을 쉼표로 여러 개 적으면, 앞의 모델이 실패할 때 다음 모델로 다시 시도한다
+    # 예) gemini-3.1-flash-lite,gemini-3.5-flash-lite  (무료 서버가 바쁠 때 503 오류 대비)
+    model_names = os.getenv("OPENAI_MODEL", "gpt-4o-mini").split(",")
+    last_error = None
+    for model_name in model_names:
+        try:
+            response = client.chat.completions.create(
+                model=model_name.strip(),
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt},
+                ],
+                response_format={"type": "json_object"},  # 반드시 JSON으로 답하도록 요청
+                temperature=0.7,
+            )
+            text = response.choices[0].message.content.strip()
+            # 일부 AI는 JSON을 ```json ... ``` 으로 감싸서 보내므로 감싼 부분을 떼어 낸다
+            if text.startswith("```"):
+                text = text.strip("`").removeprefix("json").strip()
+            return json.loads(text)
+        except Exception as error:
+            print(f"[AI] {model_name.strip()} 실패: {error} → 다음 모델로 시도")
+            last_error = error
+
+    # 모든 모델이 실패하면 이해하기 쉬운 메시지로 알린다
+    if "503" in str(last_error) or "timed out" in str(last_error):
+        raise RuntimeError("AI 서버가 혼잡해서 응답하지 않습니다. 1~2분 뒤 다시 시도해 주세요.")
+    raise last_error
 
 
 # ---------------------------------------------------------------------------

@@ -54,7 +54,7 @@ python -m venv .venv
 .venv\Scripts\activate            # macOS/Linux: source .venv/bin/activate
 pip install -r requirements.txt
 copy .env.example .env            # macOS/Linux: cp .env.example .env
-uvicorn main:app --host 0.0.0.0 --port 8000
+uvicorn main:app --host 0.0.0.0 --port 8000 --timeout-graceful-shutdown 3
 ```
 
 - 얼굴 검출 모델 파일 `backend/models/face_detection_yunet_2023mar.onnx`가 있어야 합니다.
@@ -77,7 +77,7 @@ npm run dev
 |---|---|
 | `OPENAI_API_KEY` | OpenAI API 키. **비워 두면 데모 모드** (정해진 규칙으로 질문/피드백 생성, 화면에 "데모 모드" 표시) |
 | `OPENAI_BASE_URL` | 비우면 OpenAI(유료). Gemini 주소를 적으면 **무료 Gemini API** 사용 (`.env.example` 참고) |
-| `OPENAI_MODEL` | 사용할 모델 (Gemini: `gemini-2.5-flash`, OpenAI: `gpt-4o-mini`) |
+| `OPENAI_MODEL` | 사용할 모델 (쉼표로 여러 개 적으면 실패 시 다음 모델로 자동 전환. 예: `gemini-3.1-flash-lite,gemini-3.5-flash-lite,gemini-3.5-flash`) |
 | `NARO_USERNAME`, `NARO_PASSWORD` | 로그인 계정. 바꾸려면 `naro.db`를 지우고 서버 재시작 |
 | `WEBCAM_INDEX` | USB 웹캠 번호 (기본 0) |
 | `CAMERA_ROTATE_180` | 카메라를 거꾸로 달았으면 `1` |
@@ -112,7 +112,7 @@ python vision.py picamera
 
 # 5) 서버 실행
 cp .env.example .env
-uvicorn main:app --host 0.0.0.0 --port 8000
+uvicorn main:app --host 0.0.0.0 --port 8000 --timeout-graceful-shutdown 3
 ```
 
 **PC 브라우저에서 접속하기:** 라즈베리파이 IP 확인(`hostname -I`) 후 PC의 `frontend/.env` 파일에
