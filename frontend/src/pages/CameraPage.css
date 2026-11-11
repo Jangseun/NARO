@@ -1,0 +1,32 @@
+.camera-page {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.camera-guide ol {
+  margin: 0 0 16px;
+  padding-left: 20px;
+}
+
+.camera-guide li {
+  margin-bottom: 14px;
+}
+
+.camera-guide li strong {
+  color: #202b40;
+}
+
+.camera-guide li p {
+  margin: 4px 0 0;
+  color: #475467;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .camera-page {
+    grid-template-columns: 1fr;
+  }
+}

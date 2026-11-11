@@ -1,34 +1,37 @@
+import { Routes, Route } from 'react-router'
 
-import { Routes, Route, Link } from 'react-router'
-
+import MainLayout from './layouts/MainLayout'
 import LoginPage from './pages/LoginPage'
 import DashboardPage from './pages/DashboardPage'
 import MaterialsPage from './pages/MaterialsPage'
+import CameraPage from './pages/CameraPage'
 import InterviewSetupPage from './pages/InterviewSetupPage'
+import InterviewPage from './pages/InterviewPage'
 import HistoryPage from './pages/HistoryPage'
+import ResultPage from './pages/ResultPage'
 import GrowthPage from './pages/GrowthPage'
+
+import './App.css'
 
 function App() {
   return (
-    <div>
-      <nav>
-        <Link to="/">홈</Link> |{' '}
-        <Link to="/login">로그인</Link> |{' '}
-        <Link to="/materials">자료 관리</Link> |{' '}
-        <Link to="/interview/setup">모의면접</Link> |{' '}
-        <Link to="/history">면접 기록</Link> |{' '}
-        <Link to="/growth">성장 분석</Link>
-      </nav>
+    <Routes>
+      {/* 로그인 페이지는 공통 레이아웃을 사용하지 않음 */}
+      <Route path="/login" element={<LoginPage />} />
 
-      <Routes>
+      {/* 주요 페이지는 MainLayout을 공유 (로그인해야 볼 수 있음) */}
+      <Route element={<MainLayout />}>
         <Route path="/" element={<DashboardPage />} />
-        <Route path="/login" element={<LoginPage />} />
         <Route path="/materials" element={<MaterialsPage />} />
+        <Route path="/camera" element={<CameraPage />} />
         <Route path="/interview/setup" element={<InterviewSetupPage />} />
+        {/* :id 자리에 면접 번호가 들어간다. 예) /interview/3 */}
+        <Route path="/interview/:id" element={<InterviewPage />} />
         <Route path="/history" element={<HistoryPage />} />
+        <Route path="/history/:id" element={<ResultPage />} />
         <Route path="/growth" element={<GrowthPage />} />
-      </Routes>
-    </div>
+      </Route>
+    </Routes>
   )
 }
 

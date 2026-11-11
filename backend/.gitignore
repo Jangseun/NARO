@@ -1,0 +1,5 @@
+.venv/
+__pycache__/
+.env
+naro.db
+camera_test.jpg

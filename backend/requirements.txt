@@ -1,0 +1,7 @@
+fastapi
+uvicorn[standard]
+sqlalchemy
+openai
+python-dotenv
+opencv-python-headless
+numpy

@@ -1,28 +1,190 @@
 
-.container {
-  max-width: 960px;
+.app-layout {
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 20px 48px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.logo {
+  font-size: 26px;
+  font-weight: 800;
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.navigation a {
+  color: #6b7280;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.navigation a:hover {
+  color: #2563eb;
+}
+
+/* NavLink가 현재 경로와 일치하면 active 클래스가 자동으로 추가됨 */
+.navigation a.active {
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.main-content {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 100px 24px;
+  padding: 48px 24px;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .navigation {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+  }
+}
+
+/* ---------------- 여러 페이지에서 함께 쓰는 스타일 ---------------- */
+
+.page-header {
+  margin-bottom: 28px;
+}
+
+.page-header h1 {
+  margin: 0 0 8px;
+  color: #202b40;
+  font-size: 28px;
+}
+
+.page-header p {
+  margin: 0;
+  color: #697586;
+}
+
+.card {
+  padding: 24px;
+  border: 1px solid #edf0f5;
+  border-radius: 16px;
+  background-color: white;
+}
+
+.card h2 {
+  margin: 0 0 16px;
+  color: #202b40;
+  font-size: 19px;
+}
+
+.button {
+  display: inline-block;
+  padding: 11px 18px;
+  border: none;
+  border-radius: 8px;
+  background-color: #4565b7;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #36549b;
+}
+
+.button:disabled {
+  background-color: #a7b4d6;
+  cursor: not-allowed;
+}
+
+.button.secondary {
+  border: 1px solid #dce2ec;
+  background-color: white;
+  color: #344054;
+}
+
+.button.secondary:hover {
+  background-color: #f6f8fc;
+}
+
+.button.danger {
+  background-color: white;
+  border: 1px solid #f3c4c4;
+  color: #c43c3c;
+}
+
+input[type='text'],
+input[type='number'],
+select,
+textarea {
+  padding: 11px 12px;
+  border: 1px solid #dce2ec;
+  border-radius: 8px;
+  background-color: white;
+  color: #202b40;
+  font-size: 14px;
+}
+
+textarea {
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.error-message {
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background-color: #fdeeee;
+  color: #c43c3c;
+  font-size: 14px;
+}
+
+.empty-state {
+  padding: 40px;
+  border: 1px dashed #dce2ec;
+  border-radius: 16px;
+  color: #697586;
   text-align: center;
 }
 
-h1 {
-  font-size: 64px;
-  margin-bottom: 8px;
+.demo-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background-color: #fff3e6;
+  color: #c2620a;
+  font-size: 12px;
+  font-weight: 700;
 }
 
-.subtitle {
-  color: #777;
-  font-size: 18px;
+.notice {
+  color: #98a2b3;
+  font-size: 13px;
 }
 
-.intro {
-  margin-top: 64px;
-  padding: 32px;
-  border: 1px solid #ddd;
-  border-radius: 16px;
-}
-
-.intro h2 {
-  margin-bottom: 16px;
+.logout-button {
+  padding: 6px 12px;
+  border: 1px solid #dce2ec;
+  border-radius: 8px;
+  background-color: white;
+  color: #6b7280;
+  cursor: pointer;
 }

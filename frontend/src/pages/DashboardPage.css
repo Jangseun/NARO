@@ -1,0 +1,144 @@
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.dashboard-hero {
+  padding: 48px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #eaf0ff, #f6f8ff);
+}
+
+.dashboard-eyebrow {
+  color: #4565b7;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.dashboard-hero h1 {
+  margin: 16px 0 12px;
+  color: #202b40;
+  font-size: 32px;
+}
+
+.dashboard-hero p {
+  margin: 0 0 28px;
+  color: #697586;
+}
+
+.start-button {
+  display: inline-block;
+  padding: 14px 24px;
+  border-radius: 10px;
+  background-color: #4565b7;
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.start-button:hover {
+  background-color: #36549b;
+}
+
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.stat-card {
+  padding: 28px;
+  border: 1px solid #edf0f5;
+  border-radius: 16px;
+  background-color: white;
+}
+
+.stat-card p {
+  margin: 0 0 12px;
+  color: #697586;
+  font-size: 14px;
+}
+
+.stat-card h2 {
+  margin: 0;
+  color: #202b40;
+  font-size: 28px;
+}
+
+.dashboard-menu h2 {
+  margin: 0 0 20px;
+  color: #202b40;
+  font-size: 22px;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.menu-card {
+  padding: 28px;
+  border: 1px solid #edf0f5;
+  border-radius: 16px;
+  background-color: white;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.menu-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(40, 60, 110, 0.08);
+}
+
+.menu-icon {
+  font-size: 28px;
+}
+
+.menu-card h3 {
+  margin: 16px 0 8px;
+  color: #202b40;
+  font-size: 18px;
+}
+
+.menu-card p {
+  margin: 0;
+  color: #697586;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .dashboard-hero {
+    padding: 32px 24px;
+  }
+
+  .dashboard-hero h1 {
+    font-size: 25px;
+  }
+
+  .dashboard-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .menu-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.menu-card.wide {
+  grid-column: 1 / -1;
+}
+
+.recent-link {
+  text-decoration: none;
+}
+
+.recent-link span {
+  display: block;
+  margin-top: 6px;
+  color: #697586;
+  font-size: 13px;
+}

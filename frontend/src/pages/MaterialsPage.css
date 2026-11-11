@@ -1,0 +1,83 @@
+
+.material-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.material-form h2 {
+  margin: 0;
+}
+
+.material-form-row {
+  display: flex;
+  gap: 12px;
+}
+
+.material-form-row input {
+  flex: 1;
+  min-width: 0;
+}
+
+.material-form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.materials-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.material-card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.material-card h3 {
+  margin: 8px 0 4px;
+  color: #202b40;
+}
+
+.material-card .notice {
+  margin: 0;
+}
+
+.material-type {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background-color: #eaf0ff;
+  color: #4565b7;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.material-card-buttons {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+/* 내용이 길면 4줄까지만 보여 준다 */
+.material-content {
+  display: -webkit-box;
+  margin: 14px 0 0;
+  overflow: hidden;
+  color: #475467;
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+
+@media (max-width: 768px) {
+  .material-form-row,
+  .material-card-top {
+    flex-direction: column;
+  }
+}
